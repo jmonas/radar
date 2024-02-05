@@ -81,7 +81,7 @@ class DataGenerator:
         for i in range(len(gt_instances["classes"])):
             if i > self.config_data["max_boxes_per_frame"]:
                 continue
-            class_name = gt_instances["classes"][i]
+            class_name = gt_instances["classes"][i].replace(' ','')
             box_xyzwhd = gt_instances["boxes"][i]
             class_id = self.config_data["all_classes"].index(class_name)
             if i < self.config_data["max_boxes_per_frame"]:
@@ -159,7 +159,7 @@ class DataGenerator:
                 yield (RAD_data, gt_labels, raw_boxes)
             count += 1
             if count == len(self.RAD_sequences_train) - 1:
-                # np.random.seed() # should I add seed here ?
+                np.random.seed(18) # should I add seed here ?
                 np.random.shuffle(self.RAD_sequences_train)
 
     def testData(self, ):
@@ -273,7 +273,7 @@ class DataGenerator:
         for i in range(len(gt_instances["classes"])):
             if i > self.config_data["max_boxes_per_frame"]:
                 continue
-            class_name = gt_instances["classes"][i]
+            class_name = gt_instances["classes"][i].replace(' ','')
             box_xywh = gt_instances["cart_boxes"][i]
             class_id = self.config_data["all_classes"].index(class_name)
             if i <= self.config_data["max_boxes_per_frame"]:
@@ -351,8 +351,8 @@ class DataGenerator:
                 yield (RAD_data, gt_labels, raw_boxes)
             count += 1
             if count == len(self.RAD_sequences_train) - 1:
-                # np.random.seed() # should I add seed here ?
-                np.random.shuffle(self.sequences_train)
+                np.random.seed(18) # should I add seed here ?
+                np.random.shuffle(self.RAD_sequences_train)
 
     def testDataCart(self, ):
         if self.cart_grid_strides is None:

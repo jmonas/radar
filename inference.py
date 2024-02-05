@@ -51,7 +51,7 @@ def loadDataForPlot(all_RAD_files, config_data, config_inference, \
     """ Load data one by one for generating evaluation images """
     sequence_num = -1
     for RAD_file in all_RAD_files:
-        sequence_num += 1
+        sequence_num = int(RAD_file[-10:-4])
         ### load RAD input ###
         RAD_complex = loader.readRAD(RAD_file)
 
@@ -63,10 +63,11 @@ def loadDataForPlot(all_RAD_files, config_data, config_inference, \
         RA_cart = helper.toCartesianMask(RA, config_radar, \
                                 gapfill_interval_num=int(interpolation))
         RA_img = helper.norm2Image(RA)[..., :3]
+
         RD_img = helper.norm2Image(RD)[..., :3]
         RA_cart_img = helper.norm2Image(RA_cart)[..., :3]
 
-        img_file = loader.imgfileFromRADfile(RAD_file, config_data["test_set_dir"])
+        img_file = loader.imgfileFromRADfile(RAD_file, config_inference["inference_set_dir"])
         stereo_left_image = loader.readStereoLeft(img_file)
 
         RAD_data = helper.complexTo2Channels(RAD_complex)
@@ -218,7 +219,7 @@ def main():
 
 
     ### NOTE: inference starting from here ###
-    all_RAD_files = glob(os.path.join(config_data["test_set_dir"], "RAD/*/*.npy"))
+    all_RAD_files = glob(os.path.join(config_inference["inference_set_dir"], "RAD/*.npy"))
     inferencePlotting(all_RAD_files)
 
 

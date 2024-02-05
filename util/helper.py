@@ -45,6 +45,11 @@ def getSumDim(target_array, target_axis):
     output = np.sum(target_array, axis=target_axis)
     return output 
 
+def getMaxDim(target_array, target_axis):
+    """ sum up one dimension """
+    output = np.max(target_array, axis=target_axis)
+    return output 
+
 def switchCols(target_array, cols):
     """ switch columns """
     assert isinstance(cols, tuple) or isinstance(cols, list)

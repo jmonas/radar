@@ -54,8 +54,8 @@ def process(RAD_filename, frame_id, config_data, config_radar, colors, \
         drawer.drawRadarBoxes(stereo_left_image, RD_img, RA_img, RA_cart_img, \
                             gt_instances, config_data["all_classes"], colors, axes)
         if not canvas_draw:
-            drawer.saveFigure("./images/samples/", "%.6d.png"%(frame_id))
-            cutImage("./images/samples/" + "%.6d.png"%(frame_id))
+            drawer.saveFigure("./images/samples/", "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
+            cutImage("./images/samples/" + "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
         else:
             drawer.keepDrawing(fig, 0.1)
 
@@ -88,5 +88,5 @@ def main(canvas_draw=False):
                 canvas_draw=canvas_draw)
 
 if __name__ == "__main__":
-    main(canvas_draw=True)
+    main(canvas_draw=False)
 

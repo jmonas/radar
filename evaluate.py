@@ -213,9 +213,9 @@ def main():
         """ Load data one by one for generating evaluation images """
         for sequence_num in sequences:
             ### load RAD input ###
-            RAD_complex = loader.readRAD(config_data["input_dir"], sequence_num, \
-                                        config_data["input_name_format"])
-
+            # RAD_complex = loader.readRAD(config_data["input_dir"], sequence_num, \
+            #                             config_data["input_name_format"])
+            RAD_complex = loader.readRAD(sequence_num)
             ### NOTE: real time visualization ###
             interpolation = 1
             RA = helper.getLog(helper.getSumDim(helper.getMagnitude(RAD_complex, \
@@ -227,13 +227,16 @@ def main():
             RA_img = helper.norm2Image(RA)[..., :3]
             RD_img = helper.norm2Image(RD)[..., :3]
             RA_cart_img = helper.norm2Image(RA_cart)[..., :3]
-            stereo_left_image = loader.readStereoLeft(config_data["image_dir"], \
-                                                    sequence_num, \
-                                                    config_data["image_name_format"])
-
+            # stereo_left_image = loader.readStereoLeft(config_data["image_dir"], \
+            #                                         sequence_num, \
+            #                                         config_data["image_name_format"])
+            img_file = loader.imgfileFromRADfile(sequence_num, config_data["test_set_dir"])
+            stereo_left_image = loader.readStereoLeft(img_file)
             RAD_data = helper.complexTo2Channels(RAD_complex)
-            gt_instances = loader.readRadarInstances(config_data["gt_dir"], sequence_num, \
-                                                    config_data["gt_name_format"])
+            gt_file = loader.gtfileFromRADfile(sequence_num, config_data["test_set_dir"])
+            gt_instances = loader.readRadarInstances(gt_file)
+            # gt_instances = loader.readRadarInstances(config_data["gt_dir"], sequence_num, \
+            #                                         config_data["gt_name_format"])
             gt_labels, has_label, raw_boxes = data_generator.encodeToLabels(gt_instances)
             gt_labels_cart, has_label_cart, raw_boxes_cart = \
                                     data_generator.encodeToCartBoxesLabels(gt_instances)
@@ -266,10 +269,10 @@ def main():
             shutil.rmtree(image_save_dir)
             os.makedirs(image_save_dir)
         print("Start plotting, it might take a while...")
-        pbar = tqdm(total=len(data_generator.sequences_test))
+        pbar = tqdm(total=len(data_generator.RAD_sequences_test))
         for sequence_num, data, label, label_cart, raw_boxes, raw_boxes_cart, \
                 stereo_left_image, RD_img, RA_img, RA_cart_img, gt_instances in \
-                loadDataForPlot(data_generator.sequences_test):
+                loadDataForPlot(data_generator.RAD_sequences_test):
             feature = model(data)
             pred_raw, pred = model.decodeYolo(feature)
             pred_frame = pred[0]
@@ -298,7 +301,7 @@ def main():
                     RA_img, RA_cart_img, gt_instances, nms_pred, \
                     config_data["all_classes"], colors, axes, \
                     radar_cart_nms=nms_pred_cart)
-            drawer.saveFigure(image_save_dir, "%.6d.png"%(sequence_num))
+            drawer.saveFigure(image_save_dir, "%.6d.png"%(int(sequence_num[-10:-4])))
             pbar.update(1)
 
 
@@ -368,7 +371,7 @@ def main():
 
 
     ### NOTE: plot the predictions on the entire dataset ###
-    # predictionPlots()
+    predictionPlots()
 
 
 if __name__ == "__main__":

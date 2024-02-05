@@ -109,7 +109,8 @@ def readStereoLeft(img_filename):
     """ read stereo left image for verification. """
     if os.path.exists(img_filename):
         stereo_image = cv2.imread(img_filename)
-        left_image = stereo_image[:, :stereo_image.shape[1]//2, ...][..., ::-1]
+        # left_image = stereo_image[:, :stereo_image.shape[1]//2, ...][..., ::-1]
+        left_image = stereo_image[:, :stereo_image.shape[1], ...][..., ::-1]
         return left_image
     else:
         return None

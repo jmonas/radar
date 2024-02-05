@@ -96,7 +96,7 @@ def main():
         global_steps.assign(ckpt.step.numpy())
 
     ### NOTE: define training step ###
-    @tf.function
+    # @tf.function
     def train_step(data, label):
         """ define train step for training """
         with tf.GradientTape() as tape:

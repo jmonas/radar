@@ -1,8 +1,8 @@
 {
 		"DATA" :
 		{
-				"train_set_dir": "/media/ao/Aooooo/RADDet_DATASET/train",
-				"test_set_dir": "/media/ao/Aooooo/RADDet_DATASET/test",
+				"train_set_dir": "/projects/FHEIDE/RADDet/train/",
+				"test_set_dir": "/projects/FHEIDE/RADDet/test/",
 				"all_classes" : ["person", "bicycle", "car", "motorcycle", "bus", "truck" ],
 				"global_mean_log" : 3.2438383,
 				"global_max_log" : 10.0805629,
@@ -28,12 +28,12 @@
 				"batch_size" : 3,
 				"focal_loss_iou_threshold" : 0.3,
 				"log_dir": "./logs/RadarResNet",
-				"learningrate_init": 0.0001,
-				"learningrate_end": 0.00001,
+				"learningrate_init": 1e-4,
+				"learningrate_end": 1e-5,
 				"learningrate_decay": 0.96,
 				"learningrate_decay_gap": 3000,
 				"startup_steps": 1000,
-				"learningrate_startup": 0.0001,
+				"learningrate_startup": 1e-4,
 				"warmup_steps": 60000,
 				"validate_start_steps": 10000,
 				"validate_gap": 10000
@@ -50,7 +50,7 @@
 		"INFERENCE" :
 		{
 				"log_dir": "./logs/RadarResNet",
-				"RAD_inputdir": "/media/ao/Aooooo/Radar_Inference_Data/test_4/RAD",
+				"inference_set_dir": "/projects/FHEIDE/RADDet/inference/",
 				"image_inputdir": "/media/ao/Aooooo/Radar_Inference_Data/test_4/images",
 				"confidence_threshold" : 0.5,
 				"nms_iou3d_threshold": 0.01

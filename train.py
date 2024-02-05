@@ -72,7 +72,7 @@ def main():
         global_steps.assign(ckpt.step.numpy())
 
     ### NOTE: define training step ###
-    @tf.function
+    # @tf.function
     def train_step(data, label):
         """ define train step for training """
         with tf.GradientTape() as tape:
@@ -90,7 +90,7 @@ def main():
                 tf.summary.scalar("loss/conf_loss", conf_loss, step=global_steps)
                 tf.summary.scalar("loss/category_loss", category_loss, step=global_steps)
             writer.flush()
-        return total_loss, box_loss, conf_loss, category_loss
+        return total_loss, box_loss, conf_loss, category_loss, gradients, pred, pred_raw, feature
  
     ### NOTE: define validate step ###
     # @tf.function
@@ -156,7 +156,7 @@ def main():
     ###---------------------------- TRAIN SET -------------------------###
     for data, label, raw_boxes in train_generator.repeat().\
             batch(data_generator.batch_size).take(data_generator.total_train_batches):
-        total_loss, box_loss, conf_loss, category_loss = train_step(data, label)
+        total_loss, box_loss, conf_loss, category_loss, gradients, pred, pred_raw, feature = train_step(data, label)
         tf.print("=======> train step: %4d, lr: %.6f, total_loss: %4.2f,  \
                 box_loss: %4.2f, conf_loss: %4.2f, category_loss: %4.2f" % \
                 (global_steps, optimizer.lr.numpy(), total_loss, box_loss, \

@@ -55,6 +55,7 @@ class DataGenerator:
     def readSequences(self, mode):
         """ Read sequences from train/test directories. """
         assert mode in ["train", "test"]
+        print("Read Data Sequences XXX")
         if mode == "train":
             sequences = glob.glob(os.path.join(self.config_data["train_set_dir"], \
                                 "RAD/*/*.npy"))

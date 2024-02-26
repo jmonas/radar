@@ -61,6 +61,9 @@ class DataGenerator:
         else:
             sequences = glob.glob(os.path.join(self.config_data["test_set_dir"], \
                                 "RAD/*/*.npy"))
+            # filter out 01 which was used for training
+            sequences = [seq for seq in sequences if not "/RAD/01/" in seq]
+
         if len(sequences) == 0:
             raise ValueError("Cannot read data from either train or test directory, \
                         Please double-check the data path or the data format.")

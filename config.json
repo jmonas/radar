@@ -2,7 +2,7 @@
 		"DATA" :
 		{
 				"train_set_dir": "/projects/FHEIDE/RADDet/dydata/",
-				"test_set_dir": "/projects/FHEIDE/RADDet/dydata/",
+				"test_set_dir": "/projects/FHEIDE/RADDet/test/",
 				"all_classes" : ["person", "bicycle", "car", "motorcycle", "bus", "truck" ],
 				"global_mean_log" : 3.2438383,
 				"global_max_log" : 10.0805629,

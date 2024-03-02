@@ -56,15 +56,24 @@ class DataGenerator:
         """ Read sequences from train/test directories. """
         assert mode in ["train", "test"]
         print("Read Data Sequences XXX")
+        train_folders = ["/RAD/02/", "/RAD/03/", "/RAD/04/", "/RAD/05/", "/RAD/06/", "/RAD/10/"]
+        test_folders = ["/RAD/07/", "/RAD/08/", "/RAD/09/"]
+        sequences = []
         if mode == "train":
-            sequences = glob.glob(os.path.join(self.config_data["train_set_dir"], \
+            temp_sequences = glob.glob(os.path.join(self.config_data["train_set_dir"], \
                                 "RAD/*/*.npy"))
+            for seq in temp_sequences:
+                if any(train_folder in seq for train_folder in train_folders):
+                    sequences.append(seq)
         else:
-            sequences = glob.glob(os.path.join(self.config_data["test_set_dir"], \
+            temp_sequences = glob.glob(os.path.join(self.config_data["test_set_dir"], \
                                 "RAD/*/*.npy"))
-            # filter out 01 which was used for training
-            sequences = [seq for seq in sequences if not "/RAD/01/" in seq]
-            print(sequences)
+            for seq in temp_sequences:
+                if any(test_folder in seq for test_folder in test_folders):
+                    sequences.append(seq)
+        
+        
+        print(sequences)
 
         if len(sequences) == 0:
             raise ValueError("Cannot read data from either train or test directory, \

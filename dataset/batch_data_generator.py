@@ -56,8 +56,8 @@ class DataGenerator:
         """ Read sequences from train/test directories. """
         assert mode in ["train", "test"]
         print("Read Data Sequences XXX")
-        train_folders = ["/RAD/02/", "/RAD/03/", "/RAD/04/", "/RAD/05/", "/RAD/06/", "/RAD/10/"]
-        test_folders = ["/RAD/07/", "/RAD/08/", "/RAD/09/"]
+        test_folders =train_folders = ["/RAD/02/", "/RAD/03/", "/RAD/04/", "/RAD/05/", "/RAD/06/", "/RAD/10/"]
+        # test_folders = ["/RAD/07/", "/RAD/08/", "/RAD/09/"]
         sequences = []
         if mode == "train":
             temp_sequences = glob.glob(os.path.join(self.config_data["train_set_dir"], \

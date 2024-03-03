@@ -73,7 +73,7 @@ class DataGenerator:
                     sequences.append(seq)
         
         
-        print(sequences)
+        # print(sequences)
 
         if len(sequences) == 0:
             raise ValueError("Cannot read data from either train or test directory, \
@@ -179,6 +179,8 @@ class DataGenerator:
     def testData(self, ):
         """ Generate test data with batch size """
         count = 0
+        print("Testing with:")
+        print(self.RAD_sequences_test)
         while  count < len(self.RAD_sequences_test):
             RAD_filename = self.RAD_sequences_test[count] 
             RAD_complex = loader.readRAD(RAD_filename)

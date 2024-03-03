@@ -171,10 +171,12 @@ def main():
                 lr = config_train["learningrate_init"]
             optimizer.lr.assign(lr)
         elif global_steps % config_train["learningrate_decay_gap"] == 0:
+            
             lr = optimizer.lr.numpy()
             lr = config_train["learningrate_end"] + \
                     config_train["learningrate_decay"] * \
                     (lr - config_train["learningrate_end"])
+            print("Learning Rate: ", lr)
             optimizer.lr.assign(lr)
  
         ###---------------------------- VALIDATE SET -------------------------###

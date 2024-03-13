@@ -124,7 +124,7 @@ def main():
                 mean_ap, ap_all_class = mAP.mAP(nms_pred, raw_boxes_frame.numpy(), \
                                         config_model["input_shape"], ap_all_class, \
                                         tp_iou_threshold=config_model["mAP_iou3d_threshold"])
-                mean_ap_test += mean_ap
+                mean_ap_test += mean_ap 
         for ap_class_i in ap_all_class:
             if len(ap_class_i) == 0:
                 class_ap = 0.

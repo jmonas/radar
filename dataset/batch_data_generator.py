@@ -66,11 +66,11 @@ class DataGenerator:
             # for seq in temp_sequences:
             #     if any(train_folder in seq for train_folder in train_folders):
             #         sequences.append(seq)
-            with open('train_files.txt', 'r') as f:
+            with open('dataset/train_files.txt', 'r') as f:
                 sequences = [line.strip() for line in f]
             
         else:
-            with open('test_files.txt', 'r') as f:
+            with open('dataset/test_files.txt', 'r') as f:
                 sequences = [line.strip() for line in f]
         
         print("In mode: ", mode)

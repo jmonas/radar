@@ -56,24 +56,25 @@ class DataGenerator:
         """ Read sequences from train/test directories. """
         assert mode in ["train", "test"]
         print("Read Data Sequences XXX")
-        test_folders =train_folders = ["/RAD/02/", "/RAD/03/", "/RAD/04/", "/RAD/05/", "/RAD/06/", "/RAD/10/"]
+        
+
         # test_folders = ["/RAD/07/", "/RAD/08/", "/RAD/09/"]
-        sequences = []
+        # sequences = []
         if mode == "train":
-            temp_sequences = glob.glob(os.path.join(self.config_data["train_set_dir"], \
-                                "RAD/*/*.npy"))
-            for seq in temp_sequences:
-                if any(train_folder in seq for train_folder in train_folders):
-                    sequences.append(seq)
+            # temp_sequences = glob.glob(os.path.join(self.config_data["train_set_dir"], \
+            #                     "RAD/*/*.npy"))
+            # for seq in temp_sequences:
+            #     if any(train_folder in seq for train_folder in train_folders):
+            #         sequences.append(seq)
+            with open('train_files.txt', 'r') as f:
+                sequences = [line.strip() for line in f]
+            
         else:
-            temp_sequences = glob.glob(os.path.join(self.config_data["test_set_dir"], \
-                                "RAD/*/*.npy"))
-            for seq in temp_sequences:
-                if any(test_folder in seq for test_folder in test_folders):
-                    sequences.append(seq)
+            with open('test_files.txt', 'r') as f:
+                sequences = [line.strip() for line in f]
         
-        
-        # print(sequences)
+        print("In mode: ", mode)
+        print(sequences)
 
         if len(sequences) == 0:
             raise ValueError("Cannot read data from either train or test directory, \

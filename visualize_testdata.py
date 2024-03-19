@@ -79,7 +79,7 @@ def main(canvas_draw=False):
                                         "RAD/*/*.npy"))
     all_RAD_files = [file for file in all_RAD_files if not os.path.normpath(file).split(os.sep)[-2] == "01"]
 
-    for i in tqdm(range(275)):
+    for i in tqdm(range(4)):
         RAD_filename = all_RAD_files[i]
         process(
                 RAD_filename=RAD_filename, \

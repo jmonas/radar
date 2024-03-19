@@ -57,7 +57,7 @@ def process(RAD_filename, frame_id, config_data, config_radar, colors, \
                                 gt_instances, config_data["all_classes"], colors, axes)
             if not canvas_draw:
                 drawer.saveFigure("./images/samples/", "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
-                cutImage("./images/samples/" + "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
+                # cutImage("./images/samples/" + "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
             else:
                 drawer.keepDrawing(fig, 0.1)
         except:
@@ -79,7 +79,7 @@ def main(canvas_draw=False):
                                         "RAD/*/*.npy"))
     all_RAD_files = [file for file in all_RAD_files if not os.path.normpath(file).split(os.sep)[-2] == "01"]
 
-    for i in tqdm(range(4)):
+    for i in tqdm(range(1)):
         RAD_filename = all_RAD_files[i]
         process(
                 RAD_filename=RAD_filename, \

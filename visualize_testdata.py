@@ -35,7 +35,7 @@ def process(RAD_filename, frame_id, config_data, config_radar, colors, \
     gt_instances = loader.readRadarInstances(gt_file)
     img_file = loader.imgfileFromRADfile(RAD_filename, prefix)
     stereo_left_image = loader.readStereoLeft(img_file)
-    print(f"{RAD}, {gt_instances}, {stereo_left_image}")
+    print(f"RAD: {RAD}, gt_instances:{gt_instances}, stereo_left_image: {stereo_left_image}")
     if RAD is not None and gt_instances is not None and \
                             stereo_left_image is not None:
         RA = helper.getLog(helper.getSumDim(helper.getMagnitude(RAD, power_order=2), \

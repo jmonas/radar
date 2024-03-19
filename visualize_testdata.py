@@ -80,7 +80,7 @@ def main(canvas_draw=False):
     all_RAD_files = glob(os.path.join(config_data["test_set_dir"], \
                                         "RAD/*/*.npy"))
 
-    for i in tqdm(range(len(all_RAD_files))):
+    for i in tqdm(range(280)):
         RAD_filename = all_RAD_files[i]
         process(
                 RAD_filename=RAD_filename, \

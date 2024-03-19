@@ -35,9 +35,9 @@ def process(RAD_filename, frame_id, config_data, config_radar, colors, \
     gt_instances = loader.readRadarInstances(gt_file)
     img_file = loader.imgfileFromRADfile(RAD_filename, prefix)
     stereo_left_image = loader.readStereoLeft(img_file)
-    print(f"RAD: {RAD}, gt_instances:{gt_instances}, stereo_left_image: {stereo_left_image}")
-    if RAD is not None and gt_instances is not None and \
-                            stereo_left_image is not None:
+    # print(f"RAD: {RAD}, gt_instances:{gt_instances}, stereo_left_image: {stereo_left_image}")
+    if RAD is not None and gt_instances is not None:
+                            # stereo_left_image is not None:
         RA = helper.getLog(helper.getSumDim(helper.getMagnitude(RAD, power_order=2), \
                                             target_axis=-1), scalar=10, log_10=True)
         RD = helper.getLog(helper.getSumDim(helper.getMagnitude(RAD, power_order=2), \
@@ -77,6 +77,7 @@ def main(canvas_draw=False):
 
     all_RAD_files = glob(os.path.join(config_data["test_set_dir"], \
                                         "RAD/*/*.npy"))
+    all_RAD_files = [file for file in all_RAD_files if not os.path.normpath(file).split(os.sep)[-2] == "01"]
 
     for i in tqdm(range(275)):
         RAD_filename = all_RAD_files[i]

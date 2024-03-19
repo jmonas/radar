@@ -41,26 +41,29 @@ def process(RAD_filename, frame_id, config_data, config_radar, colors, \
                                             target_axis=-1), scalar=10, log_10=True)
         RD = helper.getLog(helper.getSumDim(helper.getMagnitude(RAD, power_order=2), \
                                             target_axis=1), scalar=10, log_10=True)
+        try: 
 
-        ### NOTE: change the interval number if high resolution is needed for Cartesian ###
-        RA_cart = helper.toCartesianMask(RA, config_radar, \
-                                gapfill_interval_num=interpolation)
+            ### NOTE: change the interval number if high resolution is needed for Cartesian ###
+            RA_cart = helper.toCartesianMask(RA, config_radar, \
+                                    gapfill_interval_num=interpolation)
 
-        RA_img = helper.norm2Image(RA)[..., :3]
-        RD_img = helper.norm2Image(RD)[..., :3]
-        RA_cart_img = helper.norm2Image(RA_cart)[..., :3]
+            RA_img = helper.norm2Image(RA)[..., :3]
+            RD_img = helper.norm2Image(RD)[..., :3]
+            RA_cart_img = helper.norm2Image(RA_cart)[..., :3]
 
-        drawer.clearAxes(axes)
-        drawer.drawRadarBoxes(stereo_left_image, RD_img, RA_img, RA_cart_img, \
-                            gt_instances, config_data["all_classes"], colors, axes)
-        if not canvas_draw:
-            try:
-                drawer.saveFigure("./images/samples/", "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
-                cutImage("./images/samples/" + "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
-            except:
-                pass
-        else:
-            drawer.keepDrawing(fig, 0.1)
+            drawer.clearAxes(axes)
+            drawer.drawRadarBoxes(stereo_left_image, RD_img, RA_img, RA_cart_img, \
+                                gt_instances, config_data["all_classes"], colors, axes)
+            if not canvas_draw:
+                try:
+                    drawer.saveFigure("./images/samples/", "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
+                    cutImage("./images/samples/" + "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
+                except:
+                    pass
+            else:
+                drawer.keepDrawing(fig, 0.1)
+        except:
+            pass
 
 def main(canvas_draw=False):
     config = loader.readConfig()

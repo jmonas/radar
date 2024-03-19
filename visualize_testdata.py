@@ -60,7 +60,7 @@ def process(RAD_filename, frame_id, config_data, config_radar, colors, \
             else:
                 drawer.keepDrawing(fig, 0.1)
         except:
-            pass
+            print("why")
 
 def main(canvas_draw=False):
     config = loader.readConfig()

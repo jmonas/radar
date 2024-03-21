@@ -35,29 +35,33 @@ def process(RAD_filename, frame_id, config_data, config_radar, colors, \
     gt_instances = loader.readRadarInstances(gt_file)
     img_file = loader.imgfileFromRADfile(RAD_filename, prefix)
     stereo_left_image = loader.readStereoLeft(img_file)
-    if RAD is not None and gt_instances is not None and \
-                            stereo_left_image is not None:
+    # print(f"RAD: {RAD}, gt_instances:{gt_instances}, stereo_left_image: {stereo_left_image}")
+    if RAD is not None and gt_instances is not None:
+                            # stereo_left_image is not None:
         RA = helper.getLog(helper.getSumDim(helper.getMagnitude(RAD, power_order=2), \
                                             target_axis=-1), scalar=10, log_10=True)
         RD = helper.getLog(helper.getSumDim(helper.getMagnitude(RAD, power_order=2), \
                                             target_axis=1), scalar=10, log_10=True)
+        try: 
 
-        ### NOTE: change the interval number if high resolution is needed for Cartesian ###
-        RA_cart = helper.toCartesianMask(RA, config_radar, \
-                                gapfill_interval_num=interpolation)
+            ### NOTE: change the interval number if high resolution is needed for Cartesian ###
+            RA_cart = helper.toCartesianMask(RA, config_radar, \
+                                    gapfill_interval_num=interpolation)
 
-        RA_img = helper.norm2Image(RA)[..., :3]
-        RD_img = helper.norm2Image(RD)[..., :3]
-        RA_cart_img = helper.norm2Image(RA_cart)[..., :3]
+            RA_img = helper.norm2Image(RA)[..., :3]
+            RD_img = helper.norm2Image(RD)[..., :3]
+            RA_cart_img = helper.norm2Image(RA_cart)[..., :3]
 
-        drawer.clearAxes(axes)
-        drawer.drawRadarBoxes(stereo_left_image, RD_img, RA_img, RA_cart_img, \
-                            gt_instances, config_data["all_classes"], colors, axes)
-        if not canvas_draw:
-            drawer.saveFigure("./images/samples/", "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
-            cutImage("./images/samples/" + "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
-        else:
-            drawer.keepDrawing(fig, 0.1)
+            drawer.clearAxes(axes)
+            drawer.drawRadarBoxes(stereo_left_image, RD_img, RA_img, RA_cart_img, \
+                                gt_instances, config_data["all_classes"], colors, axes)
+            if not canvas_draw:
+                drawer.saveFigure("./images/samples/", "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
+                # cutImage("./images/samples/" + "_gt%.6d.png"%(int(RAD_filename[-10:-4])))
+            else:
+                drawer.keepDrawing(fig, 0.1)
+        except:
+            print("why")
 
 def main(canvas_draw=False):
     config = loader.readConfig()
@@ -73,8 +77,9 @@ def main(canvas_draw=False):
 
     all_RAD_files = glob(os.path.join(config_data["test_set_dir"], \
                                         "RAD/*/*.npy"))
+    all_RAD_files = [file for file in all_RAD_files if not os.path.normpath(file).split(os.sep)[-2] == "01"]
 
-    for i in tqdm(range(len(all_RAD_files))):
+    for i in tqdm(range(1)):
         RAD_filename = all_RAD_files[i]
         process(
                 RAD_filename=RAD_filename, \

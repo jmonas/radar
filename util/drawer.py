@@ -395,7 +395,7 @@ def drawRadarBoxes(stereo_left_image, RD_img, RA_img, RA_cart_img, \
         drawBoxOrEllipse(cart_box, cls, axes[3], color, \
                         x_shape=RA_cart_img.shape[1], mode=mode)
 
-    imgPlot(stereo_left_image, axes[0], None, None, "camera")
+    # imgPlot(stereo_left_image, axes[0], None, None, "camera")
     imgPlot(RD_img, axes[1], None, 1, "RD") 
     imgPlot(RA_img, axes[2], None, 1, "RA") 
     imgPlot(RA_cart_img, axes[3], None, 1, "Cartesian") 
@@ -410,6 +410,7 @@ def drawRadarPredWithGt(stereo_left_image, RD_img, RA_img, RA_cart_img, \
     for i in range(len(radar_instances["classes"])):
         bbox3d = radar_instances["boxes"][i]
         cls = radar_instances["classes"][i]
+        cls = cls.replace(" ", "")
         cart_box = radar_instances["cart_boxes"][i]
         color = colors[all_classes.index(cls)]
         ### draw box

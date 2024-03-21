@@ -270,9 +270,12 @@ def main():
             os.makedirs(image_save_dir)
         print("Start plotting, it might take a while...")
         pbar = tqdm(total=len(data_generator.RAD_sequences_test))
+        i_0 = 0 
         for sequence_num, data, label, label_cart, raw_boxes, raw_boxes_cart, \
                 stereo_left_image, RD_img, RA_img, RA_cart_img, gt_instances in \
                 loadDataForPlot(data_generator.RAD_sequences_test):
+            if i_0>4:
+                break
             feature = model(data)
             pred_raw, pred = model.decodeYolo(feature)
             pred_frame = pred[0]
@@ -303,6 +306,7 @@ def main():
                     radar_cart_nms=nms_pred_cart)
             drawer.saveFigure(image_save_dir, "%.6d.png"%(int(sequence_num[-10:-4])))
             pbar.update(1)
+            i_0+=1
 
 
 

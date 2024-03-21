@@ -25,7 +25,7 @@
 		{
 				"if_validate": true,
 				"epochs" : 1000,
-				"batch_size" : 30,
+				"batch_size" : 10,
 				"focal_loss_iou_threshold" : 0.4,
 				"log_dir": "./logs/RadarResNet",
 				"learningrate_init": 1e-4,
